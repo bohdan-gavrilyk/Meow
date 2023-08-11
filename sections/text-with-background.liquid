@@ -1,0 +1,103 @@
+<div class="main-block">
+  <div class="container">
+    <h1 class="main-block__title">{{section.settings.home_title_message}}</h1>
+    <h2 class="main-block__subtitle">{{section.settings.subtitle_message}}</h2>
+    <a
+      class="main-block__button main-button"
+      href="{{section.settings.button_link}}"
+    >
+      {{section.settings.button__text}}
+    </a>
+  </div>
+</div>
+
+<style>
+  .main-block {
+    background-image: url("{{ section.settings.background-image | img_url: 'master' }}");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding-bottom: 124px;
+  }
+  .main-block__title {
+    font-family: "Acme", sans-serif;
+    color: #fff;
+    font-size: 80px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+    padding-top: 123px;
+    padding-bottom: 20px;
+    max-width: 722px;
+    margin: 0;
+  }
+  .main-block__subtitle {
+    color: #fff;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: 0.4px;
+    max-width: 514px;
+    margin: 0;
+    padding-bottom: 50px;
+    font-family: 'Karla', sans-serif;
+  }
+
+  @media (max-width: 600px) {
+    .main-block__title {
+      font-size: 50px;
+    }
+    .main-block__subtitle {
+      font-size: 18px;
+      padding-bottom: 40px;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "text-with-background",
+    "tag": "section",
+    "class": "section",
+
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "home_title_message",
+        "label": "Title message",
+        "default": "Choose the best for the best"
+      },
+      {
+        "type": "textarea",
+        "id": "subtitle_message",
+        "label": "Subtitle message",
+        "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+      },
+      {
+        "type": "image_picker",
+        "id": "background-image",
+        "label": "Background-image"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      },
+      {
+        "type": "text",
+        "id": "button__text",
+        "label": "Button text",
+        "default": "Shop now"
+      }
+
+
+    ],
+    "presets": [
+      {
+        "name": "text-with-background"
+      }
+    ]
+  }
+{% endschema %}

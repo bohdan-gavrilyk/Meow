@@ -1,0 +1,120 @@
+<div class="achievement">
+  <div class="container">
+  <div class="achievement__list">
+    {% for block in section.blocks %}
+      <div class="achievement__item">
+        <p>{{ block.settings.title }}</p>
+        {% if block.settings.image != blank %}
+          <img src='{{block.settings.image | img_url: "master"}}' alt="Image for item">
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+
+<script type="application/json" id="simple_obj">
+  {
+    {% for block in section.blocks %}
+      "{{forloop.index}}": "{{block.settings.title}}" {% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  }
+</script>
+
+<script>
+  console.log(JSON.parse(document.querySelector('#simple_obj').innerHTML));
+  // let back = '{{section.settings.background}}'
+  // console.log(back);
+  // console.log('{{section.settings.background}}');
+</script>
+
+<style>
+  
+  .achievement__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 10px;
+  }
+  .achievement__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+    color: #FFF;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 50px;
+    letter-spacing: 0.36px;
+    text-transform: capitalize;
+  }
+  .achievement__item > p {
+    margin: 0;
+  }
+  .achievement__item:nth-child(2) {
+    padding: 0 50px;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+  }
+  @media (max-width: 1135px) {
+    .achievement__item:nth-child(2) {
+      padding: 0 15px;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+    }
+  }
+  @media (max-width: 1065px) {
+      .achievement {
+      display: none;
+    }
+  } 
+
+
+</style>
+
+{% style %}
+  .achievement {
+    background-color: {{ section.settings.background | default: "#1EA8DD" }};
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "items-bar",
+    "tag": "section",
+    "class": "section",
+
+    "settings": [
+      {
+        "type": "color",
+        "id": "background",
+        "label": "Background",
+        "default": "#1EA8DD"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "item text",
+        "type": "item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "100,000 Happy Customers"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "items-bar"
+      }
+    ]
+  }
+{% endschema %}

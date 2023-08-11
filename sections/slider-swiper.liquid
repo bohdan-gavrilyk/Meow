@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="slider swiper-container">
+    <div class="slider__wrapper swiper-wrapper">
+      {% for slide in section.blocks %}
+        <div class="slider__slide swiper-slide">
+          <img src="{{ slide.settings.image | img_url: 'master' }}" alt="{{ slide.settings.alt_text }}">
+        </div>
+      {% endfor %}
+    </div>
+    <div class="slider__pagination swiper-pagination"></div>
+  </div>
+</div>
+<style>
+  .slider__wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .slider__slide.swiper-slide{
+    display: flex;
+    justify-content: center;
+    height: 190px;
+  }
+  .slider__slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: max-content;
+  }
+  @media (max-width: 1200px) {
+    .slider__wrapper {
+      flex-wrap: wrap;
+    }
+    .slider__slide.swiper-slide{
+      height: 100px;
+    }
+  }
+  @media (max-width: 993px) {
+    .slider__wrapper {
+      justify-content: center;
+    }
+  }
+  @media (max-width: 650px) {
+    .slider{
+      overflow: hidden;
+      position: relative;
+    }
+    .slider__wrapper {
+      gap: 0;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+    }
+
+    .slider__slide > img {
+      margin: 0 auto;
+    }
+
+    .slider__slide.swiper-slide {
+      max-width: none;
+      flex-grow: 1;
+      display: flex;
+      height: 170px;
+    }
+    .slider__pagination.swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets {
+      bottom: 0;
+      z-index: 2;
+    }
+  }
+
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script>
+  const sliderSwiper = new Swiper('.swiper-container', {
+    breakpoints: {
+      650: {
+        slidesPerView: 1,
+        enabled: false,
+      }
+    }, 
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+</script>
+{% schema %}
+  {
+    "name": "Swiper Slider",
+    "settings" : [],
+    "blocks": [
+      {
+        "type": "slider_block",
+        "name": "Slider Block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "slider-swiper"
+      }
+    ]
+  } 
+{% endschema %}

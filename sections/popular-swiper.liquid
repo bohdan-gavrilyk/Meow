@@ -1,0 +1,232 @@
+<div class="popular-swiper">
+  <div class="container">
+    <div class="popular-swiper__top">
+      <h2 class="popular-swiper__title">{{section.settings.popular-swiper__title}}</h2>
+      <div class="popular-swiper__nav">
+        <div class="popular-swiper__prev">
+          <img src="{{section.settings.popular-swiper__controll | img_url: 'master'}}" alt="{{section.settings.alt_text}}">
+        </div>
+        <div class="popular-swiper__next">
+          <img src="{{section.settings.popular-swiper__controll | img_url: 'master'}}" alt="{{section.settings.alt_text}}">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container__swiper">
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper mySwiper-wrapper">
+        {% for slide in section.blocks%}
+          <div class="swiper-slide slide">
+            <img src="{{slide.settings.product.images[0] | img_url: 'master'}}" alt="{{slide.settings.alt_text}}">
+            <div class="slide__content">
+              <h3 class="slide__title">{{slide.settings.product.title}}</h3>
+              <p class="slide__desc">{{slide.settings.product.description}}</p>
+              <a class="slide__button main-button" href="{{slide.settings.product.url}}">{{section.settings.popular-swiper__text-btn}}</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script>
+  const popularSwiper = new Swiper(".mySwiper", {
+    slidesPerView: 'auto',
+    spaceBetween: 20,
+    loop: true,
+    freeMode: true,
+    breakpoints: {
+      375: {
+        slidesPerView: 1
+      },
+      768: {
+        slidesPerView: 2
+      },
+      1200: {
+        slidesPerView: 'auto'
+      }
+
+    },
+    navigation: {
+        nextEl: ".popular-swiper__next",
+        prevEl: ".popular-swiper__prev",
+    },
+  });
+</script>
+<style>
+  @import url("https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css");
+  .container__swiper{
+    padding-left: 50px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .popular-swiper__next > img {
+    transform: rotate(180deg);
+  }
+  .popular-swiper__next,
+  .popular-swiper__prev{
+    cursor: pointer;
+  }
+  .popular-swiper__nav {
+    position: relative;
+    display: flex;
+    gap: 20px;
+  }
+  .popular-swiper__title {
+    margin: 0;
+    color: #383838;
+    font-size: 55px;
+    font-weight: 400;
+    text-transform: capitalize;
+    padding-bottom: 73px;
+    font-family: "Acme", sans-serif;
+  }
+  .slide {
+    max-width: 40%;
+    color:  #383838;
+  }
+
+
+  .popular-swiper__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .slide > img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+  }
+  .slide__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .slide__title {
+    font-size: 30px;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin: 0;
+    flex-grow: 1;
+    padding-bottom: 15px;
+    font-family: Acme;
+  }
+  .slide__button {
+    flex-basis: 234px;
+    height: 51px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+  }
+  .slide__desc {
+    margin: 0;
+    flex-basis: 50%;
+    max-width: 274px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%; 
+    letter-spacing: 0.32px;
+    order: 1;
+    font-family: 'Karla', sans-serif;
+  }
+  @media (max-width: 1200px) {
+    .container__swiper{
+      padding: 0 20px;
+    }
+    .slide {
+      max-width: 50%;
+    }
+  }
+  @media (max-width: 1015px) {
+    .slide__content {
+      justify-content: center;
+    }
+    .slide__desc {
+      flex-basis: auto;
+      max-width: none;
+      padding-bottom: 20px;
+      order: 0;
+    }
+    .slide__button {
+      flex-grow: 1;
+    }
+    
+  }
+  @media (max-width: 700px) {
+    .slide {
+      max-width: 70%;
+    }
+    .slide__button {
+      max-width: none;
+    }
+  }
+  @media (max-width: 500px) {
+    .popular-swiper {
+      padding-bottom: 124px;
+    }
+    .container__swiper{
+      padding: 0;
+      margin: 0 15px;
+    }
+    .slide {
+      max-width: 100%;
+    }
+    .popular-swiper__title {
+      font-size: 35px;
+      padding-bottom: 40px;
+    }
+    .popular-swiper__prev > img,
+    .popular-swiper__next > img {
+      width: 40px;
+      height: 40px;
+    }
+
+  }
+
+</style>
+{% schema %} 
+  {
+    "name": "popular-swiper",
+    "settings" : [
+      {
+        "type": "text",
+        "id": "popular-swiper__title",
+        "label": "Popular swiper title",
+        "default": "most popular"
+      },
+      {
+        "type": "image_picker",
+        "id": "popular-swiper__controll",
+        "label": "Popular controll image"
+      },
+      {
+        "type": "text",
+        "id": "popular-swiper__text-btn",
+        "label": "Popular text button",
+        "default": "shop now"
+      }
+    ],
+    "blocks" : [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings" : [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          }
+        ]
+      }
+    ],
+    "presets" : [
+      {
+        "name": "popular-swiper"
+      }
+    ]
+  }
+{% endschema %}
